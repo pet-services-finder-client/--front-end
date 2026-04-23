@@ -1,73 +1,68 @@
-# React + TypeScript + Vite
+# 🐾 Pawly — Pet Services Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-додаток для пошуку ветеринарних та зоосервісів у Київській області. Користувачі можуть знаходити заклади на інтерактивній карті, фільтрувати за містом та типом послуг, а також бронювати послуги.
 
-Currently, two official plugins are available:
+## 🚀 Технологічний стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript**
+- **Vite** — збірка проекту
+- **React Router DOM** — маршрутизація
+- **Redux Toolkit** + **React Redux** — управління станом
+- **Leaflet** + **React Leaflet** — інтерактивна карта
+- **Tailwind CSS** — стилізація
+- **shadcn/ui** + **Radix UI** — UI компоненти
+- **React Hook Form** + **Zod** — форми та валідація
+- **Axios** — HTTP запити
 
-## React Compiler
+## 📦 Встановлення
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Клонувати репозиторій
+git clone https://github.com/your-username/pawly.git
+cd pawly
 
-## Expanding the ESLint configuration
+# Встановити залежності
+npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Запустити у режимі розробки
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📜 Скрипти
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Команда           | Опис                     |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Запуск dev-сервера       |
+| `npm run build`   | Збірка для продакшну     |
+| `npm run preview` | Перегляд продакшн збірки |
+| `npm run lint`    | Перевірка коду ESLint    |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Структура проекту
+
 ```
+src/
+ ├── app/          # Redux store та hooks
+ ├── api/          # HTTP клієнт (axios)
+ ├── components/   # Спільні компоненти
+ │    └── ui/      # shadcn/ui компоненти
+ ├── features/     # Функціональні модулі
+ ├── lib/          # Утиліти (cn тощо)
+ ├── page/         # Сторінки додатку
+ ├── types/        # TypeScript типи
+ ├── utils/        # Допоміжні функції
+ ├── App.tsx
+ └── main.tsx
+```
+
+## 🗺️ Функціональність
+
+- Перегляд закладів на інтерактивній карті (Leaflet)
+- Фільтрація за містом, типом тварин та послугами
+- Детальна сторінка закладу
+- Бронювання послуг
+- Збереження бронювань у localStorage
+
+## ⚙️ Вимоги
+
+- Node.js 18+
+- npm 9+
