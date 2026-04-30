@@ -23,7 +23,7 @@ export const loginThunk = createAsyncThunk(
     try {
       const data = await login(email, password);
       localStorage.setItem("token", data.access_token);
-      dispatch(getMeThunk());
+      await dispatch(getMeThunk());
       return data;
     } catch (e: any) {
       return rejectWithValue(
@@ -39,7 +39,9 @@ export const registerThunk = createAsyncThunk(
     try {
       const data = await register(payload);
 
-      dispatch(getMeThunk());
+      await dispatch(
+        loginThunk({ email: payload.email, password: payload.password }),
+      );
       return data;
     } catch (e: any) {
       return rejectWithValue(e?.response?.data?.detail ?? "Помилка реєстрації");
