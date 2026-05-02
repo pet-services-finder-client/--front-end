@@ -9,6 +9,10 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { loginThunk } from "@/features/authSlice";
 import { Eye, EyeOff, X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { LoginSchema, type LoginFormValues } from "./LoginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   onSwitchModal: () => void;
@@ -16,18 +20,31 @@ type Props = {
 };
 
 export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(LoginSchema),
+  });
+
   const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = await dispatch(loginThunk({ email, password }));
-    if (loginThunk.fulfilled.match(result)) {
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      await dispatch(
+        loginThunk({ email: data.email, password: data.password }),
+      ).unwrap();
+
       onClose();
+      navigate("/petCreate");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -64,7 +81,7 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
       <X className=" absolute cursor-pointer top-6 right-7" onClick={onClose} />
       <h2 className="h3">Login</h2>
       <span className="mb-8">Enter your email and password</span>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-sm text-gray-600">
             Email
@@ -73,11 +90,12 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
             id="email"
             type="email"
             placeholder="Email"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            className="h-[60px] rounded-full px-6 py-[18px] border-gray-200 placeholder:text-gray-300 focus-visible:ring-primary"
+            {...register("email")}
+            className=" rounded-full px-6 py-[18px] !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -89,10 +107,8 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-[60px] rounded-full border-gray-200 px-6 py-[18px] placeholder:text-gray-300 focus-visible:ring-primary"
+              {...register("password")}
+              className=" rounded-full !bg-gray-100 border-gray-200 px-6 py-[18px] placeholder:secondary-text focus-visible:ring-primary"
             />
             <button
               type="button"
@@ -101,6 +117,9 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
             >
               {showPassword ? <Eye /> : <EyeOff />}
             </button>
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password.message}</p>
+            )}
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
         </div>
