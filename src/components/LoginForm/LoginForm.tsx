@@ -11,15 +11,27 @@ import { Eye, EyeOff, X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { LoginSchema, type LoginFormValues } from "./LoginSchema";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
-type Props = {
+import { z } from "zod";
+
+export const LoginSchema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Invalid Password"),
+});
+
+export type LoginFormValues = z.infer<typeof LoginSchema>;
+
+interface LoginFormProps {
   onSwitchModal: () => void;
   onClose: () => void;
-};
+}
 
-export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({
+  onSwitchModal,
+  onClose,
+}) => {
   const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
@@ -29,6 +41,10 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -91,7 +107,7 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
             type="email"
             placeholder="Email"
             {...register("email")}
-            className=" rounded-full px-6 py-[18px] !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
+            className=" rounded-full px-6 py-5 !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -108,7 +124,7 @@ export const LoginForm: React.FC<Props> = ({ onSwitchModal, onClose }) => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               {...register("password")}
-              className=" rounded-full !bg-gray-100 border-gray-200 px-6 py-[18px] placeholder:secondary-text focus-visible:ring-primary"
+              className=" rounded-full !bg-gray-100 border-gray-200 px-6 py-4 placeholder:secondary-text focus-visible:ring-primary"
             />
             <button
               type="button"
