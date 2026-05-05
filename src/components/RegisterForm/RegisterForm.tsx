@@ -1,6 +1,7 @@
 import type { AppDispatch, RootState } from "@/app/store";
 import { Button } from "@/components/ui/button";
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { registerThunk } from "@/features/authSlice";
 import { Eye, EyeOff, X } from "lucide-react";
@@ -9,35 +10,67 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
+
+import { z } from "zod";
+import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
+export const registerSchema = z
+  .object({
+    full_name: z.string().min(1, "Full name is required"),
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6, "Min 6 characters"),
+    confirmPassword: z.string().min(6),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+export type RegisterFormValues = z.infer<typeof registerSchema>;
+
 type Props = {
   onClose: () => void;
   onSwitchModal: () => void;
 };
 export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [full_name, setFull_name] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const { loading, error } = useSelector((state: RootState) => state.auth);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+  });
+
   const [showConfirm, setShowConfirm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const dispatch = useDispatch<AppDispatch>();
-  const { loading, error } = useSelector((state: RootState) => state.auth);
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setPasswordError("password dont match");
-      return;
-    }
-    setPasswordError("");
-
-    const result = await dispatch(
-      registerThunk({ email, password, full_name }),
-    );
-
-    if (registerThunk.fulfilled.match(result)) {
+  const onSubmit = async (data: RegisterFormValues) => {
+    try {
+      await dispatch(
+        registerThunk({
+          email: data.email,
+          full_name: data.full_name,
+          password: data.password,
+        }),
+      ).unwrap();
       onClose();
+      navigate("/petCreate");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -77,7 +110,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
       <X onClick={onClose} className="absolute top-7 right-8 cursor-pointer" />
       <h2 className="h3 mb-8">Enter your information</h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label htmlFor="full_name" className="text-main">
             Full name
@@ -86,11 +119,12 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
             id="full_name"
             type="text"
             placeholder="Full name"
-            required
-            value={full_name}
-            onChange={(e) => setFull_name(e.target.value)}
-            className="h-[48px] rounded-full border-gray-200 placeholder:text-gray-300 focus-visible:ring-primary"
+            {...register("full_name")}
+            className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
+          {errors.full_name && (
+            <p className="text-sm text-red-500">{errors.full_name.message}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -101,11 +135,53 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
             id="email"
             type="email"
             placeholder="Email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="h-[48px] rounded-full border-gray-200 placeholder:text-gray-300 focus-visible:ring-primary"
+            {...register("email")}
+            className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="city">City</Label>
+          <Select>
+            <SelectTrigger className=" !bg-gray-100 w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
+              <SelectValue placeholder="Choose city" />
+            </SelectTrigger>
+            <SelectContent className="!bg-gray-100">
+              <SelectGroup>
+                <SelectLabel>City</SelectLabel>
+                <SelectItem
+                  className=" rounded-lg px-3 py-2
+    data-[highlighted]:bg-gray-200
+    data-[highlighted]:text-black
+    cursor-pointer"
+                  value="Kyiv"
+                >
+                  Kyiv
+                </SelectItem>
+                <SelectItem
+                  className="rounded-lg px-3 py-2
+    data-[highlighted]:bg-gray-200
+    data-[highlighted]:text-black
+    cursor-pointer"
+                  value="female"
+                >
+                  Female
+                </SelectItem>
+                <SelectItem
+                  className="rounded-lg px-3 py-2
+    data-[highlighted]:bg-gray-200
+    data-[highlighted]:text-black
+    cursor-pointer"
+                  value="unknown"
+                >
+                  Unknown
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="flex flex-col gap-1">
@@ -117,10 +193,8 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="h-[48px] rounded-full border-gray-200 placeholder:text-gray-300 focus-visible:ring-primary pr-10"
+              {...register("password")}
+              className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary pr-10"
             />
             <button
               type="button"
@@ -130,7 +204,9 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
               {showPassword ? <Eye /> : <EyeOff />}
             </button>
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -142,10 +218,8 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
               id="confirmPassword"
               type={showConfirm ? "text" : "password"}
               placeholder="Repeat password"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="h-[48px] rounded-lg border-gray-200 placeholder:text-gray-300 focus-visible:ring-primary pr-10"
+              {...register("confirmPassword")}
+              className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary pr-10"
             />
             <button
               type="button"
@@ -155,10 +229,14 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
               {showConfirm ? <Eye /> : <EyeOff />}
             </button>
           </div>
-          {passwordError && (
-            <p className="text-sm text-red-500">{passwordError}</p>
+          {errors.confirmPassword && (
+            <p className="text-sm text-red-500">
+              {errors.confirmPassword.message}
+            </p>
           )}
         </div>
+
+        {error && <p className="text-red-500">{error}</p>}
 
         <Button
           type="submit"
