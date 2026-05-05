@@ -4,6 +4,23 @@ const instance = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1",
 });
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+instance.interceptors.request.use(async (config) => {
+  // artificial delay for skeleton testing
+  if (import.meta.env.DEV) {
+    await delay(1200); // 1.2 сек
+  }
+
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
