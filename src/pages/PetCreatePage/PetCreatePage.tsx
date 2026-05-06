@@ -1,4 +1,4 @@
-import { BtnBack } from "@/components/BtnBack/BtnBack";
+import { BtnBack } from "@/components/BtnBack";
 import { PetCreateForm } from "@/components/PetCreateForm";
 import type React from "react";
 

@@ -10,14 +10,14 @@ import { logout } from "@/features/authSlice";
 type ModalType = "login" | "register" | null;
 
 export const Header: React.FC = () => {
-  const navigae = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
   const [modal, setModal] = useState<ModalType>(null);
 
   const handleLogOut = () => {
     dispatch(logout());
-    navigae("/");
+    navigate("/");
   };
   return (
     <>

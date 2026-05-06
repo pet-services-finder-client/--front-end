@@ -97,10 +97,10 @@ export const PetCreateForm: React.FC = () => {
           <div className="flex flex-col gap-2 ">
             <Label htmlFor="type">Type</Label>
             <Select onValueChange={(value) => setValue("type", value)}>
-              <SelectTrigger className=" !bg-gray-100 w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
+              <SelectTrigger className="w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
-              <SelectContent className="!bg-gray-100 ">
+              <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Type</SelectLabel>
                   {animalTypes.map((type) => (
@@ -152,10 +152,10 @@ export const PetCreateForm: React.FC = () => {
                 setValue("gender", value as "male" | "female" | "unknown")
               }
             >
-              <SelectTrigger className=" !bg-gray-100 w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
+              <SelectTrigger className=" w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
                 <SelectValue placeholder="Gender" />
               </SelectTrigger>
-              <SelectContent className="!bg-gray-100 ">
+              <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Gender</SelectLabel>
                   <SelectItem
