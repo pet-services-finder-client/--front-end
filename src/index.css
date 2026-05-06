@@ -1,14 +1,52 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/manrope";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .logo {
+    @apply font-semibold text-[40px] leading-[0%] tracking-[0];
+  }
+
+  .h1 {
+    @apply font-bold text-[64px] leading-[110%] tracking-[0];
+  }
+
+  .h2 {
+    @apply font-semibold text-[36px] leading-[120%] tracking-[0];
+  }
+
+  .h3 {
+    @apply font-semibold text-[28px] leading-[120%] tracking-[0];
+  }
+
+  .text-main-light {
+    @apply font-normal text-[18px] leading-[150%];
+  }
+
+  .text-main {
+    @apply font-semibold text-[18px] leading-[150%];
+  }
+
+  .text-secondary {
+    @apply font-normal text-[16px] leading-[150%];
+  }
+
+  .text-small {
+    @apply font-normal text-[14px] leading-[150%];
+  }
+
+  .btn-text {
+    @apply font-medium text-[16px] leading-[100%];
+  }
+}
+
 @layer base {
   .theme {
     --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif
+    --font-sans: "Manrope Variable", sans-serif;
   }
   :root {
     --background: oklch(1 0 0);
@@ -17,12 +55,12 @@
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    --primary: 217 86% 41%;
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
+    --secondary: 217 62% 86%;
     --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
@@ -42,7 +80,7 @@
     --sidebar-accent: oklch(0.97 0 0);
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0)
+    --sidebar-ring: oklch(0.708 0 0);
   }
   .dark {
     --background: oklch(0.145 0 0);
@@ -55,8 +93,8 @@
     --primary-foreground: oklch(0.205 0 0);
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
     --accent: oklch(0.269 0 0);
     --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.704 0.191 22.216);
@@ -75,7 +113,7 @@
     --sidebar-accent: oklch(0.269 0 0);
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0)
+    --sidebar-ring: oklch(0.556 0 0);
   }
   * {
     @apply border-border outline-ring/50;
