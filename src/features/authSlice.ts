@@ -1,4 +1,4 @@
-import { getMe, login, register } from "@/api/auth";
+import { getMe, login, register, updateMe } from "@/api/auth";
 import type { UserCreate, UserRead } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -53,6 +53,21 @@ export const getMeThunk = createAsyncThunk("auth/me", async () => {
   return getMe();
 });
 
+export const updateMeThunk = createAsyncThunk<
+  UserRead,
+  { full_name: string; email: string },
+  { rejectValue: string }
+>("auth/updateMe", async ({ full_name, email }, { rejectWithValue }) => {
+  try {
+    const response = await updateMe(full_name, email);
+
+    return response;
+  } catch (e: any) {
+    return rejectWithValue(
+      e?.response?.data?.detail ?? "Помилка оновлення профілю",
+    );
+  }
+});
 const authSlice = createSlice({
   name: "User",
   initialState,
@@ -87,6 +102,17 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(registerThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateMeThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateMeThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateMeThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

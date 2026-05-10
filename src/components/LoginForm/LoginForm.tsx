@@ -58,7 +58,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       ).unwrap();
 
       onClose();
-      navigate("/petCreate");
     } catch (err) {
       console.log(err);
     }

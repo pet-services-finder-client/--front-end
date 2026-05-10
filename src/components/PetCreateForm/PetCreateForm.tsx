@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { getAnimalTypes } from "@/api/animalTypes";
 import { useAppSelector } from "@/app/hooks";
 import { Skeleton } from "../ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 export const CreateShema = z.object({
   type: z.string().min(1, "Type is required"),
@@ -33,6 +34,7 @@ export const CreateShema = z.object({
 export type CreateFormValues = z.infer<typeof CreateShema>;
 
 export const PetCreateForm: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useAppSelector((state: RootState) => state.pets);
   const [animalTypes, setAnimalTypes] = useState<AnimalTypeRead[]>([]);
@@ -65,6 +67,8 @@ export const PetCreateForm: React.FC = () => {
   const onSubmit = (data: CreateFormValues) => {
     const payload = mapFormToPetCreate(data);
     dispatch(createPetThunk(payload));
+
+    navigate("/profile");
   };
 
   useEffect(() => {
