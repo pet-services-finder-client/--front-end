@@ -20,6 +20,8 @@ import {
 import { Skeleton } from "../ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { useEffect } from "react";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Props {
   pet: PetRead;
@@ -27,12 +29,34 @@ interface Props {
   onClose: () => void;
 }
 
+const PetUpdateSchema = z.object({
+  name: z.string().min(1, "Name is required").optional(),
+  breed: z.string().optional(),
+  birth_date: z.string().optional(),
+  gender: z.enum(["male", "female", "unknown"]).optional(),
+  notes: z.string().optional(),
+});
+
+type PetUpdateForm = z.infer<typeof PetUpdateSchema>;
+
+const genderOptions: { value: PetGender; label: string }[] = [
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "unknown", label: "Unknown" },
+];
+
 export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state) => state.pets);
-  const { register, handleSubmit, setValue, reset } = useForm<PetUpdate>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<PetUpdateForm>({ resolver: zodResolver(PetUpdateSchema) });
 
-  const onSubmit = async (data: PetUpdate) => {
+  const onSubmit = async (data: PetUpdateForm) => {
     const updatedData: PetUpdate = {};
 
     if (data.name?.trim()) {
@@ -80,7 +104,7 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
       reset({
         name: pet.name ?? "",
         breed: pet.breed ?? "",
-        gender: pet.gender ?? "",
+        gender: pet.gender ?? undefined,
         birth_date: pet.birth_date ?? "",
         notes: pet.notes ?? "",
       });
@@ -133,9 +157,12 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
               <Label>Name</Label>
               <Input
                 {...register("name")}
-                placeholder={pet.name}
+                placeholder="Enter pet name"
                 className="rounded-full px-6 py-5 bg-gray-100"
               />
+              {errors.name && (
+                <p className="text-sm text-red-500">{errors.name.message}</p>
+              )}
             </div>
 
             {/* Breed */}
@@ -143,9 +170,12 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
               <Label>Breed</Label>
               <Input
                 {...register("breed")}
-                placeholder={pet.breed ?? ""}
+                placeholder="Enter breed"
                 className="rounded-full px-6 py-5 bg-gray-100"
               />
+              {errors.breed && (
+                <p className="text-sm text-red-500">{errors.breed.message}</p>
+              )}
             </div>
 
             {/* Birth date */}
@@ -173,33 +203,18 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Gender</SelectLabel>
-                    <SelectItem
-                      className="rounded-lg px-3 py-2
+                    {genderOptions.map((option) => (
+                      <SelectItem
+                        className="rounded-lg px-3 py-2
     data-[highlighted]:bg-gray-200
     data-[highlighted]:text-black
     cursor-pointer"
-                      value="male"
-                    >
-                      Male
-                    </SelectItem>
-                    <SelectItem
-                      className="rounded-lg px-3 py-2
-    data-[highlighted]:bg-gray-200
-    data-[highlighted]:text-black
-    cursor-pointer"
-                      value="female"
-                    >
-                      Female
-                    </SelectItem>
-                    <SelectItem
-                      className="rounded-lg px-3 py-2
-    data-[highlighted]:bg-gray-200
-    data-[highlighted]:text-black
-    cursor-pointer"
-                      value="unknown"
-                    >
-                      Unknown
-                    </SelectItem>
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -210,7 +225,7 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
               <Label>Notes</Label>
               <Textarea
                 {...register("notes")}
-                placeholder={pet.notes ?? ""}
+                placeholder="Enter notes"
                 className="bg-gray-100"
               />
             </div>

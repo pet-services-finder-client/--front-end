@@ -14,8 +14,8 @@ export interface UserBase {
 }
 
 export interface UserUpdate {
-  full_name: string | null;
-  email: string | null;
+  full_name?: string;
+  email?: string;
 }
 
 export interface UserCreate extends UserBase {

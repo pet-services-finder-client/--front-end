@@ -14,7 +14,7 @@ export const getMe = () => {
   return client.get<UserRead>("/auth/me");
 };
 
-export const updateMe = (full_name: string, email: string) => {
+export const updateMe = (full_name?: string, email?: string) => {
   return client.patch<UserRead>("/auth/me", {
     full_name,
     email,

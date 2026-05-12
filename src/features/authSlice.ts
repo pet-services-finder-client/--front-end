@@ -55,7 +55,7 @@ export const getMeThunk = createAsyncThunk("auth/me", async () => {
 
 export const updateMeThunk = createAsyncThunk<
   UserRead,
-  { full_name: string; email: string },
+  { full_name?: string; email?: string },
   { rejectValue: string }
 >("auth/updateMe", async ({ full_name, email }, { rejectWithValue }) => {
   try {

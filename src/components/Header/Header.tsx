@@ -9,6 +9,7 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { logout } from "@/features/authSlice";
 import { Menu, Search, X } from "lucide-react";
 import { Input } from "../ui/input";
+import { ProfileIcon } from "../icons/ProfileIcon";
 
 type ModalType = "login" | "register" | null;
 
@@ -66,7 +67,7 @@ export const Header: React.FC = () => {
 
             {user && (
               <Link to="/profile">
-                <img src="./icons/profile.svg" alt="profile" />
+                <ProfileIcon />
               </Link>
             )}
           </div>
