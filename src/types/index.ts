@@ -13,6 +13,11 @@ export interface UserBase {
   full_name: string | null;
 }
 
+export interface UserUpdate {
+  full_name?: string;
+  email?: string;
+}
+
 export interface UserCreate extends UserBase {
   password: string;
 }

@@ -12,16 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
 
 import { z } from "zod";
-import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 
 export const registerSchema = z
   .object({
@@ -141,47 +131,6 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email.message}</p>
           )}
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <Label htmlFor="city">City</Label>
-          <Select>
-            <SelectTrigger className=" !bg-gray-100 w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
-              <SelectValue placeholder="Choose city" />
-            </SelectTrigger>
-            <SelectContent className="!bg-gray-100">
-              <SelectGroup>
-                <SelectLabel>City</SelectLabel>
-                <SelectItem
-                  className=" rounded-lg px-3 py-2
-    data-[highlighted]:bg-gray-200
-    data-[highlighted]:text-black
-    cursor-pointer"
-                  value="Kyiv"
-                >
-                  Kyiv
-                </SelectItem>
-                <SelectItem
-                  className="rounded-lg px-3 py-2
-    data-[highlighted]:bg-gray-200
-    data-[highlighted]:text-black
-    cursor-pointer"
-                  value="female"
-                >
-                  Female
-                </SelectItem>
-                <SelectItem
-                  className="rounded-lg px-3 py-2
-    data-[highlighted]:bg-gray-200
-    data-[highlighted]:text-black
-    cursor-pointer"
-                  value="unknown"
-                >
-                  Unknown
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
         </div>
 
         <div className="flex flex-col gap-1">
