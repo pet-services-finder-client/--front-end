@@ -7,11 +7,12 @@ import { LoginForm } from "../LoginForm";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { logout } from "@/features/authSlice";
-import { Menu, Search, X } from "lucide-react";
+import { Menu as MenuIcon, Search, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { ProfileIcon } from "../icons/ProfileIcon";
+import { Menu } from "./Menu";
 
-type ModalType = "login" | "register" | null;
+export type ModalType = "login" | "register" | null;
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -32,10 +33,13 @@ export const Header: React.FC = () => {
 
   useEffect(() => {
     if (searchOpen) {
-      inputRef.current?.focus();
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+
+      return () => clearTimeout(timer);
     }
   }, [searchOpen]);
-
   return (
     <>
       <header className="flex items-center justify-between w-full py-4 md:h-[91px] px-4 md:px-[108px] md:pt-[20px] ">
@@ -57,12 +61,17 @@ export const Header: React.FC = () => {
                   ? "w-[200px] opacity-100"
                   : "w-0 opacity-0 px-0 border-0"
               }`}
-              onBlur={() => setSearchOpen(false)}
+              onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
             />
 
             <Search
               className="cursor-pointer"
-              onClick={() => setSearchOpen(!searchOpen)}
+              onClick={() => {
+                setSearchOpen(true);
+                setTimeout(() => {
+                  inputRef.current?.focus();
+                }, 50);
+              }}
             />
 
             {user && (
@@ -114,16 +123,11 @@ export const Header: React.FC = () => {
 
         {/* Mobile Controls */}
         <div className="flex items-center gap-3 md:hidden">
-          <Search
-            className="cursor-pointer"
-            onClick={() => setSearchOpen(!searchOpen)}
-          />
-
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X /> : <Menu />}
+            {mobileMenuOpen ? <X /> : <MenuIcon />}
           </button>
         </div>
       </header>
@@ -143,38 +147,12 @@ export const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden flex flex-col gap-4 px-4 py-4 border-b bg-white">
-          <nav className="flex flex-col gap-3">
-            <Link to="/clinics" onClick={() => setMobileMenuOpen(false)}>
-              Clinics
-            </Link>
-
-            <Link to="/grooming" onClick={() => setMobileMenuOpen(false)}>
-              Grooming
-            </Link>
-
-            <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>
-              Shop
-            </Link>
-
-            {user && (
-              <Link to="/profile" onClick={() => setMobileMenuOpen(false)}>
-                Profile
-              </Link>
-            )}
-          </nav>
-
-          <div className="flex flex-col gap-3">
-            {user ? (
-              <Button onClick={handleLogOut}>Log Out</Button>
-            ) : (
-              <>
-                <Button onClick={() => setModal("register")}>Sign In</Button>
-                <Button onClick={() => setModal("login")}>Login</Button>
-              </>
-            )}
-          </div>
-        </div>
+        <Menu
+          openMenu={setMobileMenuOpen}
+          setSearchOpen={setSearchOpen}
+          handleLogOut={handleLogOut}
+          setModal={setModal}
+        />
       )}
 
       {/* Modal */}

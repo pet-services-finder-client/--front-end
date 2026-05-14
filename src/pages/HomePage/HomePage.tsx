@@ -5,9 +5,9 @@ import type React from "react";
 
 export const HomePage: React.FC = () => {
   return (
-    <main className="relative">
+    <div className="relative grid grid-cols-4 md:grid-cols-12 gap-0">
       <PetServicesHero />
       <PetCareIntroSection />
-    </main>
+    </div>
   );
 };

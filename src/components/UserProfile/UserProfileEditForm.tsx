@@ -33,7 +33,7 @@ export const UserProfileEditForm: React.FC<Props> = ({ open, onClose }) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<UserUpdateForm>({
     resolver: zodResolver(UserUpdateSchema),
   });
@@ -48,10 +48,14 @@ export const UserProfileEditForm: React.FC<Props> = ({ open, onClose }) => {
   }, [user, reset]);
 
   const onSubmit = async (data: UserUpdateForm) => {
+    if (Object.keys(dirtyFields).length === 0) {
+      onClose();
+      return;
+    }
     try {
       const payload: UserUpdate = {};
-      if (data.full_name) payload.full_name = data.full_name;
-      if (data.email) payload.email = data.email;
+      if (dirtyFields.full_name) payload.full_name = data.full_name;
+      if (dirtyFields.email) payload.email = data.email;
 
       await dispatch(updateMeThunk(payload)).unwrap();
       toast.success("Profile updated successfully");

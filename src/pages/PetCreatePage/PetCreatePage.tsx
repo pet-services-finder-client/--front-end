@@ -4,9 +4,9 @@ import type React from "react";
 
 export const PetCreatePage: React.FC = () => {
   return (
-    <main>
+    <div className="grid grid-cols-4 md:grid-cols-12">
       <BtnBack />
       <PetCreateForm />
-    </main>
+    </div>
   );
 };

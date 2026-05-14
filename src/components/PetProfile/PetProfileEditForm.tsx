@@ -53,38 +53,24 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<PetUpdateForm>({ resolver: zodResolver(PetUpdateSchema) });
 
   const onSubmit = async (data: PetUpdateForm) => {
-    const updatedData: PetUpdate = {};
-
-    if (data.name?.trim()) {
-      updatedData.name = data.name;
-    }
-
-    if (data.breed !== undefined && data.breed !== "") {
-      updatedData.breed = data.breed;
-    }
-
-    if (data.birth_date) {
-      updatedData.birth_date = data.birth_date;
-    }
-
-    if (data.gender) {
-      updatedData.gender = data.gender as PetGender;
-    }
-
-    if (data.notes !== undefined && data.notes !== "") {
-      updatedData.notes = data.notes;
-    }
-
-    updatedData.animal_type_id = pet.animal_type.id;
-
-    if (Object.keys(updatedData).length === 1) {
+    if (Object.keys(dirtyFields).length === 0) {
       onClose();
       return;
     }
+
+    const updatedData: PetUpdate = {
+      animal_type_id: pet.animal_type.id,
+    };
+
+    if (dirtyFields.name) updatedData.name = data.name;
+    if (dirtyFields.breed) updatedData.breed = data.breed;
+    if (dirtyFields.birth_date) updatedData.birth_date = data.birth_date;
+    if (dirtyFields.gender) updatedData.gender = data.gender;
+    if (dirtyFields.notes) updatedData.notes = data.notes;
 
     try {
       await dispatch(
@@ -93,6 +79,7 @@ export const PetProfileEditForm: React.FC<Props> = ({ pet, open, onClose }) => {
           data: updatedData,
         }),
       ).unwrap();
+
       onClose();
     } catch (error) {
       console.error("Failed to update pet:", error);

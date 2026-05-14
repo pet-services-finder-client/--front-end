@@ -6,6 +6,7 @@ import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { UserProfileEditForm } from "./UserProfileEditForm";
+import { UserProfileIcone } from "../icons/UserProfileIcone";
 
 export const UserProfile: React.FC = () => {
   const { user } = useAppSelector((state: RootState) => state.auth);
@@ -13,7 +14,7 @@ export const UserProfile: React.FC = () => {
   return (
     <div>
       <div className="flex items-center gap-6">
-        <div className="h-[125px] w-[125px] rounded-full bg-gray-100" />
+        <UserProfileIcone />
         <div className="flex-col">
           <div className="flex gap-11">
             <h2>{user?.full_name}</h2>

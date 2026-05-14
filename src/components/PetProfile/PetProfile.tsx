@@ -8,6 +8,7 @@ import type { PetRead } from "@/types";
 
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { PetProfileIcon } from "../icons/PetProfileIcon";
 
 export const PetProfile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,12 +40,12 @@ export const PetProfile: React.FC = () => {
   }
 
   return (
-    <main className="max-w-[384px]">
+    <div className="max-w-[384px]">
       {pets.map((pet) => (
         <div key={pet.id}>
           <div className="w-full bg-gray-50 h-1 mb-6" />
           <div className="flex items-center gap-6">
-            <div className="h-[125px] w-[125px] rounded-full bg-gray-100" />
+            <PetProfileIcon />
             <div className="flex-col">
               <div className="flex gap-11">
                 <h2 className="h2">{pet.name}</h2>
@@ -100,6 +101,6 @@ export const PetProfile: React.FC = () => {
           onClose={() => setSelectedPet(null)}
         />
       )}
-    </main>
+    </div>
   );
 };

@@ -94,7 +94,7 @@ export const PetCreateForm: React.FC = () => {
     );
   }
   return (
-    <div className="max-w-[597px] mt-7">
+    <div className="col-span-4 max-w-[597px] mt-7 ">
       <h1 className="h2 mb-4">Tell us about your pet</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
         <div className="flex flex-col gap-4">

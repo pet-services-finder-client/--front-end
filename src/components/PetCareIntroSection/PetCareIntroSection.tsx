@@ -2,9 +2,9 @@ import type React from "react";
 
 export const PetCareIntroSection: React.FC = () => {
   return (
-    <section className="relative mt-[144px] ">
+    <section className="relative col-span-4 md:col-span-12 mt-16 md:mt-[144px] ">
       <div
-        className="absolute pointer-events-none w-[42px] h-[42px] "
+        className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
           top: "-50px",
           left: "46%",
@@ -15,7 +15,7 @@ export const PetCareIntroSection: React.FC = () => {
         }}
       />
       <div
-        className="absolute pointer-events-none w-[42px] h-[42px] "
+        className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
           top: "-65px",
           left: "51%",
@@ -26,7 +26,7 @@ export const PetCareIntroSection: React.FC = () => {
         }}
       />
       <div
-        className="absolute pointer-events-none w-[42px] h-[42px] "
+        className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
           top: "10px",
           left: "51%",
@@ -37,7 +37,7 @@ export const PetCareIntroSection: React.FC = () => {
         }}
       />
       <div
-        className="absolute pointer-events-none w-[42px] h-[42px] "
+        className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
           top: "-10px",
           left: "56%",
