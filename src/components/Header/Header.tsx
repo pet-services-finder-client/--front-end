@@ -1,7 +1,7 @@
 import type React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RegisterForm } from "../RegisterForm";
 import { LoginForm } from "../LoginForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,9 @@ import { Menu as MenuIcon, Search, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { ProfileIcon } from "../icons/ProfileIcon";
 import { Menu } from "./Menu";
+import type { BusinessListItem } from "@/types";
+import { searchBusinesses } from "@/api/business";
+import { DropDown } from "../DropDown/DropDown";
 
 export type ModalType = "login" | "register" | null;
 
@@ -22,14 +25,44 @@ export const Header: React.FC = () => {
   const [modal, setModal] = useState<ModalType>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<BusinessListItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleLogOut = () => {
     dispatch(logout());
     navigate("/");
     setMobileMenuOpen(false);
   };
+
+  const handleSearch = useCallback((value: string) => {
+    setQuery(value);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    if (!value.trim()) {
+      setResults([]);
+      setDropdownOpen(false);
+      return;
+    }
+
+    debounceRef.current = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await searchBusinesses(value.trim());
+        setResults(data.items);
+        setDropdownOpen(true);
+      } catch {
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }, 350);
+  }, []);
 
   useEffect(() => {
     if (searchOpen) {
@@ -50,19 +83,34 @@ export const Header: React.FC = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex flex-row items-center gap-8">
+        <div className="hidden md:flex flex-row items-center gap-8 relative">
           <div className="flex items-center gap-3">
-            <Input
-              ref={inputRef}
-              type="text"
-              placeholder="Search..."
-              className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                searchOpen
-                  ? "w-[200px] opacity-100"
-                  : "w-0 opacity-0 px-0 border-0"
-              }`}
-              onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
-            />
+            <div>
+              <Input
+                ref={inputRef}
+                type="text"
+                placeholder="Search..."
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                  searchOpen
+                    ? "w-[200px] opacity-100"
+                    : "w-0 opacity-0 px-0 border-0"
+                }`}
+                onChange={(e) => handleSearch(e.target.value)}
+                onBlur={() => {
+                  setTimeout(() => {
+                    setDropdownOpen(false);
+                    if (!query) setSearchOpen(false);
+                  }, 150);
+                }}
+              />
+              {dropdownOpen && searchOpen && (
+                <DropDown
+                  dropdownRef={dropdownRef}
+                  results={results}
+                  loading={loading}
+                />
+              )}
+            </div>
 
             <Search
               className="cursor-pointer"

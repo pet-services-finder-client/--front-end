@@ -63,3 +63,31 @@ export interface PetRead extends PetBase {
   created_at: string;
   updated_at: string;
 }
+
+export interface BusinessListItem {
+  id: number;
+  name: string;
+  slug: string;
+  address: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  accepts_emergencies: boolean;
+  emergency_24_7: boolean;
+  cover_image_url: string | null;
+  category: {
+    id: number;
+    slug: string;
+    name: string;
+    icon_url: string | null;
+    sort_order: number;
+  };
+  created_at: string;
+}
+
+export interface BusinessListResponse {
+  items: BusinessListItem[];
+  total: number;
+  limit: number;
+  offset: number;
+}

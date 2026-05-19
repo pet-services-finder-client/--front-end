@@ -8,6 +8,7 @@ import { HomePage } from "./pages/HomePage/HomePage.tsx";
 import { ClinicsPage } from "./pages/ClinicsPage/ClinicsPage.tsx";
 import { PetCreatePage } from "./pages/PetCreatePage/PetCreatePage.tsx";
 import { UserPetProfilePage } from "./pages/UserPetProfilePage/UserPetProfilePage.tsx";
+import { BusinessDetailsPage } from "./pages/BusinessDetailsPage/BusinessDetailsPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="clinics" element={<ClinicsPage />} />
           <Route path="petCreate" element={<PetCreatePage />} />
           <Route path="profile" element={<UserPetProfilePage />} />
+          <Route path="business/:id" element={<BusinessDetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
