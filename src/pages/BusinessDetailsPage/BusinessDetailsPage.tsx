@@ -1,4 +1,4 @@
-import { getBusines } from "@/api/business";
+import { getBusinessById } from "@/api/business";
 import type { BusinessListItem } from "@/types";
 import type React from "react";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ export const BusinessDetailsPage: React.FC = () => {
       return;
     }
 
-    getBusines(Number(id)).then((res) => {
+    getBusinessById(Number(id)).then((res) => {
       setBusines(res);
     });
   }, [id]);

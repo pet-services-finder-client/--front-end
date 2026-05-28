@@ -26,33 +26,7 @@ export const UserProfile: React.FC = () => {
           <p>{user?.email}</p>
         </div>
       </div>
-      <div className="mt-6 flex flex-col gap-3">
-        <div className="flex gap-1">
-          <Button className="bg-transparent" id="bell">
-            <Bell className="cursor-pointer" />
-          </Button>
-          <Label htmlFor="bell" className="cursor-pointer">
-            Notifications
-          </Label>
-        </div>
-        <div className="flex gap-1">
-          <Button id="settings" className="bg-transparent">
-            <Settings className="cursor-pointer" />
-          </Button>
-          <Label htmlFor="settings" className="cursor-pointer">
-            Account Settings
-          </Label>
-        </div>
-        <div className="flex gap-1 ">
-          <Button id="trash2" className="bg-transparent">
-            <Trash2 className="cursor-pointer" />
-          </Button>
-          <Label htmlFor="trash2" className="cursor-pointer">
-            {" "}
-            Delete profil
-          </Label>
-        </div>
-      </div>
+      <div className="mt-6 flex flex-col gap-3"></div>
       {modal && (
         <UserProfileEditForm open={modal} onClose={() => setModal(false)} />
       )}

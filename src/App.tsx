@@ -2,8 +2,21 @@ import { Outlet } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "./app/store";
+import { useEffect } from "react";
+import { getMeThunk } from "./features/authSlice";
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      dispatch(getMeThunk());
+    }
+  }, [dispatch]);
   return (
     <div className=" theme flex flex-col min-h-screen">
       <Header />

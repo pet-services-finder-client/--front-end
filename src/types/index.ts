@@ -91,3 +91,56 @@ export interface BusinessListResponse {
   limit: number;
   offset: number;
 }
+
+export interface Category {
+  id: number;
+  slug: string;
+  name: string;
+  icon_url: string | null;
+  sort_order: number;
+}
+
+export interface Service {
+  id: number;
+  slug: string;
+  name: string;
+  category_id: number;
+  sort_order: number;
+}
+
+export interface BusinessListItem {
+  id: number;
+  name: string;
+  slug: string;
+  address: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  accepts_emergencies: boolean;
+  emergency_24_7: boolean;
+  cover_image_url: string | null;
+  category: Category;
+  created_at: string;
+}
+
+export interface BusinessListResponse {
+  items: BusinessListItem[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+export interface BusinessFilters {
+  q?: string;
+  category_id?: number;
+  service_id?: number;
+  animal_type_id?: number;
+  accepts_emergencies?: boolean | string;
+  emergency_24_7?: boolean | string;
+  open_now?: boolean | string;
+  radius_km?: number;
+  lat?: number;
+  lon?: number;
+  limit?: number;
+  offset?: number;
+}
