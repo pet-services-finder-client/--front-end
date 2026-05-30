@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RegisterForm } from "../RegisterForm";
 import { LoginForm } from "../LoginForm";
+import { ForgotPasswordForm } from "../ForgotPasswordForm/ForgotPasswordForm";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { logout } from "@/features/authSlice";
@@ -15,7 +16,7 @@ import type { BusinessListItem } from "@/types";
 import { searchBusinesses } from "@/api/business";
 import { DropDown } from "../DropDown/DropDown";
 
-export type ModalType = "login" | "register" | null;
+export type ModalType = "login" | "register" | "forgot" | null;
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -69,13 +70,13 @@ export const Header: React.FC = () => {
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 50);
-
       return () => clearTimeout(timer);
     }
   }, [searchOpen]);
+
   return (
     <>
-      <header className="flex items-center justify-between w-full py-4 md:h-[91px] px-4 md:px-[108px] md:pt-[20px] ">
+      <header className="flex items-center justify-between w-full py-4 md:h-[91px] px-4 md:px-[108px] md:pt-[20px]">
         {/* Logo */}
         <Link to="/" className="flex flex-col items-center gap-2">
           <span className="logo text-primary">Pawly</span>
@@ -116,9 +117,7 @@ export const Header: React.FC = () => {
               className="cursor-pointer"
               onClick={() => {
                 setSearchOpen(true);
-                setTimeout(() => {
-                  inputRef.current?.focus();
-                }, 50);
+                setTimeout(() => inputRef.current?.focus(), 50);
               }}
             />
 
@@ -157,7 +156,6 @@ export const Header: React.FC = () => {
                 >
                   Sign In
                 </Button>
-
                 <Button
                   onClick={() => setModal("login")}
                   className="btn-text border border-primary min-w-[130px] h-[50px] text-white bg-primary hover:bg-transparent hover:text-primary rounded-[34px]"
@@ -203,7 +201,7 @@ export const Header: React.FC = () => {
         />
       )}
 
-      {/* Modal */}
+      {/* Modals */}
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
           {modal === "register" && (
@@ -216,8 +214,12 @@ export const Header: React.FC = () => {
           {modal === "login" && (
             <LoginForm
               onClose={() => setModal(null)}
-              onSwitchModal={() => setModal("register")}
+              onSwitchModal={() => setModal("forgot")}
             />
+          )}
+
+          {modal === "forgot" && (
+            <ForgotPasswordForm onClose={() => setModal(null)} />
           )}
         </div>
       )}

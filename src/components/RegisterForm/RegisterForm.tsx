@@ -12,13 +12,14 @@ import { useNavigate } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
 
 import { z } from "zod";
+import { passwordSchema } from "@/utils/passwordSchema";
 
 export const registerSchema = z
   .object({
     full_name: z.string().min(1, "Full name is required"),
     email: z.string().email("Invalid email"),
-    password: z.string().min(6, "Min 6 characters"),
-    confirmPassword: z.string().min(6),
+    password: passwordSchema,
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",

@@ -1,4 +1,12 @@
-import { getMe, login, register, updateMe } from "@/api/auth";
+import {
+  changePassword,
+  forgotPassword,
+  getMe,
+  login,
+  register,
+  resetPassword,
+  updateMe,
+} from "@/api/auth";
 import type { UserCreate, UserRead } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -68,6 +76,54 @@ export const updateMeThunk = createAsyncThunk<
     );
   }
 });
+
+export const changePasswordThunk = createAsyncThunk<
+  void,
+  { old_password: string; new_password: string },
+  { rejectValue: string }
+>(
+  "auth/changePassword",
+  async ({ old_password, new_password }, { rejectWithValue }) => {
+    try {
+      await changePassword(old_password, new_password);
+    } catch (e: any) {
+      return rejectWithValue(
+        e?.response?.data?.detail ?? "Помилка зміни паролю",
+      );
+    }
+  },
+);
+
+export const forgotPasswordThunk = createAsyncThunk<
+  void,
+  { email: string },
+  { rejectValue: string }
+>("auth/forgotPassword", async ({ email }, { rejectWithValue }) => {
+  try {
+    await forgotPassword(email);
+  } catch (e: any) {
+    return rejectWithValue(
+      e?.response?.data?.detail ?? "Помилка відправки листа",
+    );
+  }
+});
+
+export const resetPasswordThunk = createAsyncThunk<
+  void,
+  { token: string; new_password: string },
+  { rejectValue: string }
+>(
+  "auth/resetPassword",
+  async ({ token, new_password }, { rejectWithValue }) => {
+    try {
+      await resetPassword(token, new_password);
+    } catch (e: any) {
+      return rejectWithValue(
+        e?.response?.data?.detail ?? "Невірний або застарілий токен",
+      );
+    }
+  },
+);
 const authSlice = createSlice({
   name: "User",
   initialState,
@@ -113,6 +169,39 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(updateMeThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(changePasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changePasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(changePasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(forgotPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(forgotPasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(forgotPasswordThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(resetPasswordThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

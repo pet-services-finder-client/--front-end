@@ -20,3 +20,18 @@ export const updateMe = (full_name?: string, email?: string) => {
     email,
   });
 };
+
+export const changePassword = (old_password: string, new_password: string) => {
+  return client.post<void>("/auth/change-password", {
+    old_password,
+    new_password,
+  });
+};
+
+export const forgotPassword = (email: string) => {
+  return client.post<void>("/auth/forgot-password", { email });
+};
+
+export const resetPassword = (token: string, new_password: string) => {
+  return client.post<void>("/auth/reset-password", { token, new_password });
+};
