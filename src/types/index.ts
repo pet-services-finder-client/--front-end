@@ -64,34 +64,6 @@ export interface PetRead extends PetBase {
   updated_at: string;
 }
 
-export interface BusinessListItem {
-  id: number;
-  name: string;
-  slug: string;
-  address: string;
-  city: string;
-  latitude: number;
-  longitude: number;
-  accepts_emergencies: boolean;
-  emergency_24_7: boolean;
-  cover_image_url: string | null;
-  category: {
-    id: number;
-    slug: string;
-    name: string;
-    icon_url: string | null;
-    sort_order: number;
-  };
-  created_at: string;
-}
-
-export interface BusinessListResponse {
-  items: BusinessListItem[];
-  total: number;
-  limit: number;
-  offset: number;
-}
-
 export interface Category {
   id: number;
   slug: string;
@@ -106,6 +78,37 @@ export interface Service {
   name: string;
   category_id: number;
   sort_order: number;
+}
+
+export interface BusinessDetail {
+  id: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  status: string;
+  address: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  phone: string | null;
+  website: string | null;
+  email: string | null;
+  accepts_emergencies: boolean;
+  emergency_24_7: boolean;
+  cover_image_url: string | null;
+  category: Category;
+  owner: { id: number; full_name: string };
+  animal_types: AnimalTypeRead[];
+  services: Service[];
+  hours: {
+    day_of_week: number;
+    is_closed: boolean;
+    is_24h: boolean;
+    open_time: string | null;
+    close_time: string | null;
+  }[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface BusinessListItem {

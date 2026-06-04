@@ -28,7 +28,7 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export const Map: React.FC<Props> = ({ businesses, isLoading }) => {
   const [selected, setSelected] = useState<BusinessListItem | null>(null);
-  const [mapContainer, setMapContainer] = useState<HTMLDivElement | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -36,13 +36,12 @@ export const Map: React.FC<Props> = ({ businesses, isLoading }) => {
         <Skeleton className="w-full h-[754px]" />
       ) : (
         <APIProvider apiKey={API_KEY}>
-          <div ref={setMapContainer} className="relative w-full h-[754px]">
+          <div ref={mapContainerRef} className="relative w-full h-[754px]">
             <GoogleMap
               style={{ width: "100%", height: "100%" }}
               defaultCenter={{ lat: 50.4501, lng: 30.5234 }}
               defaultZoom={12}
               gestureHandling="greedy"
-              disableDefaultUI
             >
               {businesses.map((b) => (
                 <Marker
@@ -61,7 +60,7 @@ export const Map: React.FC<Props> = ({ businesses, isLoading }) => {
               open={!!selected}
               onClose={() => setSelected(null)}
               business={selected}
-              container={mapContainer}
+              container={mapContainerRef.current}
             />
           </div>
         </APIProvider>

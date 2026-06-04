@@ -1,6 +1,6 @@
 import type {
+  BusinessDetail,
   BusinessFilters,
-  BusinessListItem,
   BusinessListResponse,
   Category,
   Service,
@@ -53,7 +53,7 @@ export const searchBusinesses = (query: string, limit = 6) => {
 };
 
 export const getBusinessById = (id: number) => {
-  return client.get<BusinessListItem>(`/businesses/${id}`);
+  return client.get<BusinessDetail>(`/businesses/${id}`);
 };
 
 export const getCategories = () => {

@@ -7,7 +7,7 @@ export const BtnBack = () => {
       className="text-primary btn-text md:col-span-12"
       onClick={() => navigate(-1)}
     >
-      Back
+      Назад
     </button>
   );
 };

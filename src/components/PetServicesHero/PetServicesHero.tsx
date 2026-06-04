@@ -1,7 +1,11 @@
 import type React from "react";
 import { Button } from "../ui/button";
 
-export const PetServicesHero: React.FC = () => {
+interface Props {
+  onExploreClick?: () => void;
+}
+
+export const PetServicesHero: React.FC<Props> = ({ onExploreClick }) => {
   return (
     <section className="col-span-4 md:col-span-12 relative flex flex-col md:grid md:grid-cols-12 items-center pt-8 pb-0 overflow-hidden bg-white w-full">
       <div
@@ -50,7 +54,10 @@ export const PetServicesHero: React.FC = () => {
           Explore top-rated clinics, grooming,
           <br className="hidden md:block" /> and more based on your location.
         </h2>
-        <Button className="btn-primary w-fit min-w-[200px] text-white h-[52px] rounded-full mt-2">
+        <Button
+          className="btn-primary w-fit min-w-[200px] text-white h-[52px] rounded-full mt-2"
+          onClick={onExploreClick}
+        >
           Explore places
         </Button>
       </div>

@@ -11,12 +11,20 @@ interface Props {
 export const BusinessCard: React.FC<Props> = ({ business }) => {
   const [liked, setLiked] = useState(false);
   return (
-    <div className="bg-white rounded-2xl h-60 overflow-hidden shadow-sm border border-gray-100">
+    <Link
+      to={`/businesses/${business.id}`}
+      className="bg-white rounded-2xl h-60 overflow-hidden shadow-sm border border-gray-100"
+    >
       <div className="relative">
         <img
           src={business.cover_image_url ?? "/placeholder.jpg"}
           alt={business.name}
-          className="w-full h-[160px] object-cover"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src =
+              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='140' fill='%23f3f4f6'%3E%3Crect width='400' height='140'/%3E%3C/svg%3E";
+          }}
+          className="w-full h-[140px] object-cover"
         />
         <button
           onClick={() => setLiked((prev) => !prev)}
@@ -24,7 +32,7 @@ export const BusinessCard: React.FC<Props> = ({ business }) => {
         >
           <Heart
             size={16}
-            className={liked ? "fill-red-500 text-red-500" : "text-gray-400"}
+            className={liked ? "fill-blue-500 text-blue-500" : "text-gray-400"}
           />
         </button>
       </div>
@@ -34,15 +42,7 @@ export const BusinessCard: React.FC<Props> = ({ business }) => {
         <p className="text-xs text-gray-500 mt-0.5">
           {business.city}, {business.address}
         </p>
-
-        <Link
-          to={`/businesses/${business.id}`}
-          className="flex items-center gap-1 text-blue-500 text-xs mt-2 hover:text-blue-700"
-        >
-          Детальніше
-          <span>›</span>
-        </Link>
       </div>
-    </div>
+    </Link>
   );
 };
