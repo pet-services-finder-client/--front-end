@@ -6,7 +6,7 @@ export const PetCareIntroSection: React.FC = () => {
       <div
         className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
-          top: "-50px",
+          top: "-90px",
           left: "46%",
           backgroundImage: "url('/icons/paw.svg')",
           backgroundSize: "contain",
@@ -17,7 +17,7 @@ export const PetCareIntroSection: React.FC = () => {
       <div
         className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
-          top: "-65px",
+          top: "-105px",
           left: "51%",
           backgroundImage: "url('/icons/paw.svg')",
           backgroundSize: "contain",
@@ -28,7 +28,7 @@ export const PetCareIntroSection: React.FC = () => {
       <div
         className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
-          top: "10px",
+          top: "-20px",
           left: "51%",
           backgroundImage: "url('/icons/paw.svg')",
           backgroundSize: "contain",
@@ -39,7 +39,7 @@ export const PetCareIntroSection: React.FC = () => {
       <div
         className="hidden md:block absolute pointer-events-none w-[42px] h-[42px]"
         style={{
-          top: "-10px",
+          top: "-40px",
           left: "56%",
           backgroundImage: "url('/icons/paw.svg')",
           backgroundSize: "contain",
@@ -48,12 +48,11 @@ export const PetCareIntroSection: React.FC = () => {
         }}
       />
 
-      <h2 className="h2">All-in-one pet care platform</h2>
+      <h2 className="h2">Усе для догляду за улюбленцем — в одному місці</h2>
       <p className="text-main-light mt-4">
-        A platform that enables pet owners to discover and book trusted services
-        — including
-        <br /> veterinary care, grooming, and pet shops — in a single,
-        streamlined experience.
+        Платформа для пошуку та запису до перевірених сервісів: ветеринарних
+        клінік,
+        <br /> грумінгу та зоомагазинів — в одному місці
       </p>
     </section>
   );

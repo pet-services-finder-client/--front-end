@@ -25,9 +25,6 @@ export const BusinessInfoCard: React.FC<Props> = ({ business }) => {
     <div className="w-full max-w-[392px] bg-accent-card rounded-2xl p-4 shadow-sm border border-gray-100 ">
       <div className="flex justify-between items-start mb-2">
         <h2 className="h3">{business.name}</h2>
-        <button>
-          <Heart size={20} className="text-blue-500 fill-blue-500" />
-        </button>
       </div>
 
       <div className="flex gap-2 items-start">

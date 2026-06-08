@@ -47,15 +47,14 @@ export const PetServicesHero: React.FC<Props> = ({ onExploreClick }) => {
 
       <div className=" order-2 md:order-1 md:col-start-1 md:col-end-8 flex flex-col gap-4 z-10 w-full">
         <h1 className="h1 text-[40px] md:text-[64px]">
-          Find pet services <br />
-          near you
+          Знайдіть найкращі послуги для вашого улюбленця
         </h1>
         <h2 className="h2 text-[#4C4C4C] text-[20px] md:text-[36px]">
-          Explore top-rated clinics, grooming,
-          <br className="hidden md:block" /> and more based on your location.
+          Обирайте перевірені клініки, грумінг та
+          <br className="hidden md:block" /> інші послуги у вашому місті
         </h2>
         <Button
-          className="btn-primary w-fit min-w-[200px] text-white h-[52px] rounded-full mt-2"
+          className="btn-primary w-fit min-w-[200px] border-primary text-white h-[52px] rounded-full mt-2 hover:text-primary hover:bg-transparent"
           onClick={onExploreClick}
         >
           Explore places

@@ -147,3 +147,10 @@ export interface BusinessFilters {
   limit?: number;
   offset?: number;
 }
+
+export interface AutocompleteItem {
+  id: number;
+  name: string;
+  slug: string;
+  category_slug: string;
+}

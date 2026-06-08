@@ -12,8 +12,8 @@ import { Menu as MenuIcon, Search, X } from "lucide-react";
 import { Input } from "../ui/input";
 import { ProfileIcon } from "../icons/ProfileIcon";
 import { Menu } from "./Menu";
-import type { BusinessListItem } from "@/types";
-import { searchBusinesses } from "@/api/business";
+import type { AutocompleteItem } from "@/types";
+import { autocompleteBusinesses } from "@/api/business";
 import { DropDown } from "../DropDown/DropDown";
 
 export type ModalType = "login" | "register" | "forgot" | null;
@@ -27,7 +27,7 @@ export const Header: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<BusinessListItem[]>([]);
+  const [results, setResults] = useState<AutocompleteItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
     setQuery(value);
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
-    if (!value.trim()) {
+    if (value.trim().length < 2) {
       setResults([]);
       setDropdownOpen(false);
       return;
@@ -54,8 +54,8 @@ export const Header: React.FC = () => {
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
       try {
-        const data = await searchBusinesses(value.trim());
-        setResults(data.items);
+        const data = await autocompleteBusinesses(value.trim());
+        setResults(data);
         setDropdownOpen(true);
       } catch {
         setResults([]);
@@ -130,13 +130,13 @@ export const Header: React.FC = () => {
 
           <nav className="flex gap-8">
             <Link to="/clinics" className="btn-text">
-              Clinics
+              Клініки
             </Link>
             <Link to="/grooming" className="btn-text">
-              Grooming
+              Грумінг
             </Link>
             <Link to="/shop" className="btn-text">
-              Shop
+              Зоомагазини
             </Link>
           </nav>
 
@@ -146,7 +146,7 @@ export const Header: React.FC = () => {
                 onClick={handleLogOut}
                 className="btn-text border border-primary min-w-[130px] h-[50px] text-white bg-primary hover:bg-transparent hover:text-primary rounded-[34px]"
               >
-                Log Out
+                Вихід
               </Button>
             ) : (
               <>
@@ -154,13 +154,13 @@ export const Header: React.FC = () => {
                   onClick={() => setModal("register")}
                   className="btn-text border border-primary min-w-[130px] h-[50px] text-white bg-primary hover:bg-transparent hover:text-primary rounded-[34px]"
                 >
-                  Sign In
+                  Реєстрація
                 </Button>
                 <Button
                   onClick={() => setModal("login")}
                   className="btn-text border border-primary min-w-[130px] h-[50px] text-white bg-primary hover:bg-transparent hover:text-primary rounded-[34px]"
                 >
-                  Login
+                  Вхід
                 </Button>
               </>
             )}

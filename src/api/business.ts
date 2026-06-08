@@ -1,4 +1,5 @@
 import type {
+  AutocompleteItem,
   BusinessDetail,
   BusinessFilters,
   BusinessListResponse,
@@ -63,4 +64,10 @@ export const getCategories = () => {
 export const getServices = (categoryId?: number) => {
   const params = categoryId ? `?category_id=${categoryId}` : "";
   return client.get<Service[]>(`/services${params}`);
+};
+
+export const autocompleteBusinesses = (q: string, limit = 10) => {
+  return client.get<AutocompleteItem[]>(
+    `/businesses/autocomplete?q=${encodeURIComponent(q)}&limit=${limit}`,
+  );
 };

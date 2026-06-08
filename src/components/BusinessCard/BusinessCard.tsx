@@ -26,15 +26,6 @@ export const BusinessCard: React.FC<Props> = ({ business }) => {
           }}
           className="w-full h-[140px] object-cover"
         />
-        <button
-          onClick={() => setLiked((prev) => !prev)}
-          className="absolute top-3 right-3 bg-white rounded-full p-1.5 shadow"
-        >
-          <Heart
-            size={16}
-            className={liked ? "fill-blue-500 text-blue-500" : "text-gray-400"}
-          />
-        </button>
       </div>
 
       <div className="p-3">
