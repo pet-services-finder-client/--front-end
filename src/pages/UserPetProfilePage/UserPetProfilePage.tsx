@@ -2,7 +2,6 @@ import { BtnBack } from "@/components/BtnBack";
 import { PetProfile } from "@/components/PetProfile";
 import { UserProfile } from "@/components/UserProfile";
 import type React from "react";
-import { Link } from "react-router-dom";
 
 export const UserPetProfilePage: React.FC = () => {
   return (

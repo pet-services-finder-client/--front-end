@@ -32,7 +32,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   onSwitchModal,
   onClose,
 }) => {
-  const navigate = useNavigate();
   const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const {
