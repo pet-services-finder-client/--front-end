@@ -99,17 +99,17 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
   return (
     <div className="bg-white rounded-2xl p-8 w-full max-w-[648px] relative shadow-lg">
       <X onClick={onClose} className="absolute top-7 right-8 cursor-pointer" />
-      <h2 className="h3 mb-8">Enter your information</h2>
+      <h2 className="h3 mb-8">Введіть ваші дані </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label htmlFor="full_name" className="text-main">
-            Full name
+            Ім’я
           </label>
           <Input
             id="full_name"
             type="text"
-            placeholder="Full name"
+            placeholder="Ім’я"
             {...register("full_name")}
             className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
@@ -120,12 +120,12 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
 
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-main">
-            Email
+            Електронна пошта
           </label>
           <Input
             id="email"
             type="email"
-            placeholder="Email"
+            placeholder="Електронна пошта"
             {...register("email")}
             className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
@@ -136,13 +136,13 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
 
         <div className="flex flex-col gap-1">
           <label htmlFor="password" className="text-main">
-            Password
+            Пароль
           </label>
           <div className="relative">
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="Пароль"
               {...register("password")}
               className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary pr-10"
             />
@@ -161,13 +161,13 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
 
         <div className="flex flex-col gap-1">
           <label htmlFor="confirmPassword" className="text-main">
-            Repeat password
+            Повторіть пароль{" "}
           </label>
           <div className="relative">
             <Input
               id="confirmPassword"
               type={showConfirm ? "text" : "password"}
-              placeholder="Repeat password"
+              placeholder="Повторіть пароль"
               {...register("confirmPassword")}
               className=" rounded-full !bg-gray-100 px-6 py-[18px] border-gray-200 placeholder:secondary-text focus-visible:ring-primary pr-10"
             />
@@ -193,7 +193,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
           disabled={loading}
           className="btn-primary w-full h-[52px] rounded-full text-white mt-2"
         >
-          {loading ? "Завантаження..." : "Next"}
+          {loading ? "Завантаження..." : "Далі"}
         </Button>
 
         <button
@@ -201,7 +201,7 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
           className="text-sm text-primary underline text-center"
           onClick={onSwitchModal}
         >
-          Already have an account? Log in
+          Вже маєте акаунт? Вхід
         </button>
       </form>
     </div>

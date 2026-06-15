@@ -58,20 +58,17 @@ export const PetProfile: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <Link to="/petCreate" className="text-small text-primary">
-              + Add another pet
-            </Link>
             <div className="mt-6 flex flex-col gap-3">
               <div className="flex items-center gap-20">
                 <span className="text-main-light bg-accent-card rounded-full py-1 pl-4 pr-16">
-                  Gender
+                  Стать
                 </span>
                 <span className="text-main-light">{pet.gender}</span>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <span className="text-main-light bg-accent-card rounded-full py-1 px-4 min-w-[140px]">
-                Birth date
+                Дата народження{" "}
               </span>
               <span className="text-main-light">{pet.birth_date}</span>
             </div>
@@ -93,7 +90,9 @@ export const PetProfile: React.FC = () => {
           </div>
         </div>
       ))}
-
+      <Link to="/petCreate" className="text-small text-primary">
+        + Add another pet
+      </Link>
       {selectedPet && (
         <PetProfileEditForm
           pet={selectedPet}

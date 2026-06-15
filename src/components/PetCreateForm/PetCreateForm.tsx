@@ -64,9 +64,9 @@ export const PetCreateForm: React.FC = () => {
     };
   };
 
-  const onSubmit = (data: CreateFormValues) => {
+  const onSubmit = async (data: CreateFormValues) => {
     const payload = mapFormToPetCreate(data);
-    dispatch(createPetThunk(payload));
+    await dispatch(createPetThunk(payload));
 
     navigate("/profile");
   };
@@ -95,18 +95,18 @@ export const PetCreateForm: React.FC = () => {
   }
   return (
     <div className="col-span-4 max-w-[597px] mt-7 ">
-      <h1 className="h2 mb-4">Tell us about your pet</h1>
+      <h1 className="h2 mb-4">Розкажіть про вашого улюбленця</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2 ">
-            <Label htmlFor="type">Type</Label>
+            <Label htmlFor="type">Тип тварини</Label>
             <Select onValueChange={(value) => setValue("type", value)}>
               <SelectTrigger className="w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
                 <SelectValue placeholder="Type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Type</SelectLabel>
+                  <SelectLabel>Тип тварини</SelectLabel>
                   {animalTypes.map((type) => (
                     <SelectItem
                       key={type.id}
@@ -127,11 +127,11 @@ export const PetCreateForm: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Ім’я</Label>
             <Input
               type="text"
               id="name"
-              placeholder="Name"
+              placeholder="Ім’я"
               {...register("name")}
               className=" rounded-full px-6 py-[18px] !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
             />
@@ -140,24 +140,24 @@ export const PetCreateForm: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="breed">Breed</Label>
+            <Label htmlFor="breed">Порода</Label>
             <Input
               type="text"
               id="breed"
-              placeholder="Breed"
+              placeholder="Порода"
               {...register("breed")}
               className=" rounded-full  px-6 py-[18px] !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
             />
           </div>
           <div className="flex flex-col gap-2 ">
-            <Label htmlFor="gender">Gender</Label>
+            <Label htmlFor="gender">Стать</Label>
             <Select
               onValueChange={(value) =>
                 setValue("gender", value as "male" | "female" | "unknown")
               }
             >
               <SelectTrigger className=" w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
-                <SelectValue placeholder="Gender" />
+                <SelectValue placeholder="Стать" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>

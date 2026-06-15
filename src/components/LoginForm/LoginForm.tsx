@@ -94,17 +94,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <div className="bg-white relative rounded-2xl px-7 pt-[84px] pb-[26px] w-full max-w-[648px]  shadow-lg">
       <X className=" absolute cursor-pointer top-6 right-7" onClick={onClose} />
-      <h2 className="h3">Login</h2>
-      <span className="mb-8">Enter your email and password</span>
+      <h2 className="h3">Вхід</h2>
+      <span className="mb-8">Введіть електронну пошту та пароль</span>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label htmlFor="email" className="text-sm text-gray-600">
-            Email
+            Електронна пошта
           </label>
           <Input
             id="email"
             type="email"
-            placeholder="Email"
+            placeholder="Електронна пошта"
             {...register("email")}
             className=" rounded-full px-6 py-5 !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
           />
@@ -115,13 +115,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
         <div className="flex flex-col gap-1">
           <label htmlFor="password" className="text-sm text-gray-600">
-            Password
+            Пароль
           </label>
           <div className="relative">
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              placeholder="Пароль "
               {...register("password")}
               className=" rounded-full !bg-gray-100 border-gray-200 px-6 py-4 placeholder:secondary-text focus-visible:ring-primary"
             />
@@ -144,7 +144,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           disabled={loading}
           className="btn-primary w-full h-[52px] rounded-full text-white mt-2"
         >
-          {loading ? "Завантаження..." : "Log in"}
+          {loading ? "Завантаження..." : "Увійти"}
         </Button>
 
         <button
@@ -152,7 +152,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           className="text-sm text-primary underline text-center"
           onClick={onSwitchModal}
         >
-          Forgot password?
+          Забули пароль?
         </button>
       </form>
     </div>
