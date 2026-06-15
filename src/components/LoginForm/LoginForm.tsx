@@ -9,7 +9,6 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { loginThunk } from "@/features/authSlice";
 import { Eye, EyeOff, X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";

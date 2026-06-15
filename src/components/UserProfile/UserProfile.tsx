@@ -1,9 +1,8 @@
 import { useAppSelector } from "@/app/hooks";
 import type { RootState } from "@/app/store";
-import { Bell, Settings, SquarePen, Trash2 } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import type React from "react";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
+
 import { useState } from "react";
 import { UserProfileEditForm } from "./UserProfileEditForm";
 import { UserProfileIcone } from "../icons/UserProfileIcone";

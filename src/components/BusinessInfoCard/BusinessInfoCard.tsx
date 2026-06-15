@@ -1,11 +1,10 @@
 import type { BusinessDetail } from "@/types";
-import { Clock, Heart, MapPin, Phone } from "lucide-react";
+import { Clock, MapPin, Phone } from "lucide-react";
 import type React from "react";
 
 interface Props {
   business: BusinessDetail | null;
 }
-const DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
 
 export const BusinessInfoCard: React.FC<Props> = ({ business }) => {
   const todayHours = business?.hours.find(

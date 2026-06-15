@@ -1,7 +1,7 @@
 import type { BusinessListItem } from "@/types";
-import { Heart } from "lucide-react";
+
 import type React from "react";
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
 }
 
 export const BusinessCard: React.FC<Props> = ({ business }) => {
-  const [liked, setLiked] = useState(false);
   return (
     <Link
       to={`/businesses/${business.id}`}

@@ -1,4 +1,4 @@
-import type { Token, UserCreate, UserRead, UserUpdate } from "@/types";
+import type { Token, UserCreate, UserRead } from "@/types";
 import { client } from "@/utils/axiosClient";
 
 export const login = (email: string, password: string) => {
