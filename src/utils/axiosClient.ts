@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://api.pawlyapp.me",
+  baseURL: "https://api.pawlyapp.me/api/v1",
 });
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
