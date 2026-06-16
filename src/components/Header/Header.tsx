@@ -90,7 +90,7 @@ export const Header: React.FC = () => {
               <Input
                 ref={inputRef}
                 type="text"
-                placeholder="Search..."
+                placeholder="Пошук..."
                 className={`transition-all duration-300 ease-in-out overflow-hidden ${
                   searchOpen
                     ? "w-[200px] opacity-100"

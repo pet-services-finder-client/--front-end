@@ -52,7 +52,7 @@ export const Filters: React.FC<Props> = ({ filters, onChange }) => {
           <SelectTrigger className="w-full rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 gap-2">
             <SelectValue placeholder="Оберіть..." />
           </SelectTrigger>
-          <SelectContent className="rounded-xl border-0 shadow-lg bg-white p-2 min-w-[220px]">
+          <SelectContent className="rounded-xl border-0 shadow-lg bg-white p-2 min-w-[220px] ring-1 ring-gray-200">
             <SelectItem
               value="all"
               className="rounded-lg py-3 px-3 text-sm text-gray-700 hover:bg-gray-50"
