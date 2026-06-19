@@ -28,18 +28,28 @@ export const Footer: React.FC = () => {
           </Link>
         </nav>
         <div className="hidden md:block h-[195px] md:col-start-10 md:col-end-10 w-[1px] bg-secondary self-center" />
-        <nav className="col-start-4 col-end-5 md:col-start-11 md:col-end-13 flex flex-col items-center md:items-start justify-center gap-4 md:pl-16">
+        <nav className="col-start-4 col-end-5 md:col-start-11 md:col-end-13 flex flex-col items-start justify-center gap-4 md:pl-16">
           <h3 className="h3 text-base md:text-[28px]">Слідкуйте за нами</h3>
-          <Link to="/" className=" flex  items-center">
-            <img src="./icons/Instagram.svg" alt="" />
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-6 flex justify-center">
+              <img src="./icons/Instagram.svg" alt="" className="w-6 h-6" />
+            </div>
             <span className="text-main text-sm md:text-[18px]">Instagram</span>
           </Link>
-          <Link to="/" className=" flex  items-center">
-            <img src="./icons/logos_facebook.svg" alt="" />
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-6 flex justify-center">
+              <img
+                src="./icons/logos_facebook.svg"
+                alt=""
+                className="w-6 h-6"
+              />
+            </div>
             <span className="text-main text-sm md:text-[18px]">Facebook</span>
           </Link>
-          <Link to="/" className=" flex  items-center">
-            <img src="./icons/Tiktok.svg" alt="" />
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-6 flex justify-center">
+              <img src="./icons/Tiktok.svg" alt="" className="w-6 h-6" />
+            </div>
             <span className="text-main text-sm md:text-[18px]">TikTok</span>
           </Link>
         </nav>

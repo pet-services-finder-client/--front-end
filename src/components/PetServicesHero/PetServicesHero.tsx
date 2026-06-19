@@ -57,7 +57,7 @@ export const PetServicesHero: React.FC<Props> = ({ onExploreClick }) => {
           className="btn-primary w-fit min-w-[200px] border-primary text-white h-[52px] rounded-full mt-2 hover:text-primary hover:bg-transparent"
           onClick={onExploreClick}
         >
-          Explore places
+          Переглянути сервіси
         </Button>
       </div>
 

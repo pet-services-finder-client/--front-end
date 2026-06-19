@@ -35,17 +35,17 @@ export const Menu: React.FC<Props> = ({
           className="btn-text"
           onClick={() => openMenu(false)}
         >
-          Clinics
+          Клініки
         </Link>
         <Link
           to="/grooming"
           className="btn-text"
           onClick={() => openMenu(false)}
         >
-          Grooming
+          Грумінг
         </Link>
         <Link to="/shop" className="btn-text" onClick={() => openMenu(false)}>
-          Shop
+          Зоомагазини
         </Link>
         {user && (
           <Link
