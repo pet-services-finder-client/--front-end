@@ -28,7 +28,6 @@ export const Menu: React.FC<Props> = ({
       >
         <X size={24} />
       </button>
-
       <nav className="flex flex-col items-center gap-6 text-base">
         <Link
           to="/clinics"
@@ -53,11 +52,10 @@ export const Menu: React.FC<Props> = ({
             className="btn-text"
             onClick={() => openMenu(false)}
           >
-            Profile
+            Кабінет
           </Link>
         )}
       </nav>
-
       <Search
         className="cursor-pointer text-gray-500"
         onClick={() => {
@@ -65,14 +63,13 @@ export const Menu: React.FC<Props> = ({
           openMenu(false);
         }}
       />
-
       <div className="flex flex-col items-center gap-3 w-[180px]">
         {user ? (
           <Button
             onClick={handleLogOut}
             className="border border-primary w-full h-[42px] text-white bg-primary hover:bg-transparent hover:text-primary rounded-[34px]"
           >
-            Log Out
+            Вихід
           </Button>
         ) : (
           <>
@@ -83,7 +80,7 @@ export const Menu: React.FC<Props> = ({
               }}
               className="border border-primary w-full h-[42px] text-white bg-primary hover:bg-transparent hover:text-primary rounded-[34px]"
             >
-              Sign In
+              Реєстрація
             </Button>
             <Button
               onClick={() => {
@@ -92,11 +89,56 @@ export const Menu: React.FC<Props> = ({
               }}
               className="border border-primary w-full h-[42px] bg-transparent text-primary hover:bg-primary hover:text-white rounded-[34px]"
             >
-              Login
+              Вхід
             </Button>
           </>
         )}
       </div>
+
+      <div
+        className="block absolute pointer-events-none w-[42px] h-[42px]"
+        style={{
+          bottom: "180px",
+          left: "35%",
+          backgroundImage: "url('/icons/paw.svg')",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          transform: "rotate(20deg)",
+        }}
+      />
+      <div
+        className="block absolute pointer-events-none w-[42px] h-[42px]"
+        style={{
+          bottom: "120px",
+          left: "20%",
+          backgroundImage: "url('/icons/paw.svg')",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          transform: "rotate(20deg)",
+        }}
+      />
+      <div
+        className="block absolute pointer-events-none w-[42px] h-[42px]"
+        style={{
+          bottom: "60px",
+          left: "30%",
+          backgroundImage: "url('/icons/paw.svg')",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          transform: "rotate(20deg)",
+        }}
+      />
+      <div
+        className="block absolute pointer-events-none w-[42px] h-[42px]"
+        style={{
+          bottom: "10px",
+          left: "15%",
+          backgroundImage: "url('/icons/paw.svg')",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          transform: "rotate(20deg)",
+        }}
+      />
     </div>
   );
 };

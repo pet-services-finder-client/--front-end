@@ -17,7 +17,7 @@ export const DropDown: React.FC<Props> = ({
   return (
     <div
       ref={dropdownRef}
-      className="absolute top-10 -left-3 mt-1 w-[240px] bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden"
+      className="absolute top-10 left-0 mt-1 w-full md:w-[200px] bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden"
     >
       {loading ? (
         <div className="px-4 py-3 text-sm text-gray-400">Searching...</div>

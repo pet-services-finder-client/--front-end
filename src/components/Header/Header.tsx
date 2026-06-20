@@ -180,14 +180,27 @@ export const Header: React.FC = () => {
 
       {/* Mobile Search */}
       {searchOpen && (
-        <div className="px-4 py-2 md:hidden">
+        <div className="px-4 py-2 md:hidden relative">
           <Input
             ref={inputRef}
             type="text"
-            placeholder="Search..."
+            placeholder="Пошук..."
             className="w-full"
-            onBlur={() => setSearchOpen(false)}
+            onChange={(e) => handleSearch(e.target.value)}
+            onBlur={() => {
+              setTimeout(() => {
+                setDropdownOpen(false);
+                if (!query) setSearchOpen(false);
+              }, 150);
+            }}
           />
+          {dropdownOpen && searchOpen && (
+            <DropDown
+              dropdownRef={dropdownRef}
+              results={results}
+              loading={loading}
+            />
+          )}
         </div>
       )}
 
