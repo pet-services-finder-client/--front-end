@@ -16,8 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 export const LoginSchema = z.object({
-  email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Invalid Password"),
+  email: z.string().email("не валідна пошта"),
+  password: z.string().min(6, "не валідний пароль"),
 });
 
 export type LoginFormValues = z.infer<typeof LoginSchema>;

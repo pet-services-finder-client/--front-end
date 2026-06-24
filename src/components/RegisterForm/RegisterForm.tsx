@@ -16,13 +16,13 @@ import { passwordSchema } from "@/utils/passwordSchema";
 
 export const registerSchema = z
   .object({
-    full_name: z.string().min(1, "Full name is required"),
-    email: z.string().email("Invalid email"),
+    full_name: z.string().min(1, "Введіть ім'я"),
+    email: z.string().email("Не валідна пошта"),
     password: passwordSchema,
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "Паролі не співпадають",
     path: ["confirmPassword"],
   });
 

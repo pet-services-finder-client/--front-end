@@ -1,3 +1,4 @@
+import posthog from "posthog-js";
 import {
   changePassword,
   forgotPassword,
@@ -131,6 +132,7 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       localStorage.removeItem("token");
+      posthog.reset();
     },
   },
 
@@ -149,6 +151,10 @@ const authSlice = createSlice({
       })
       .addCase(getMeThunk.fulfilled, (state, action) => {
         state.user = action.payload;
+        posthog.identify(String(action.payload.id), {
+          email: action.payload.email,
+          full_name: action.payload.full_name,
+        });
       })
       .addCase(registerThunk.pending, (state) => {
         state.loading = true;

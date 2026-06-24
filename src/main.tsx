@@ -10,6 +10,12 @@ import { UserPetProfilePage } from "./pages/UserPetProfilePage/UserPetProfilePag
 import { BusinessDetailsPage } from "./pages/BusinessDetailsPage/BusinessDetailsPage.tsx";
 import { Catalog } from "./pages/Catalog/Catalog.tsx";
 import { ResetPasswordPage } from "./pages/ResetPasswordPage/ResetPasswordPage.tsx";
+import posthog from "posthog-js";
+
+posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
+  api_host: import.meta.env.VITE_POSTHOG_HOST ?? "https://eu.i.posthog.com",
+  person_profiles: "identified_only",
+});
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
