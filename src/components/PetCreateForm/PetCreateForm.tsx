@@ -102,7 +102,7 @@ export const PetCreateForm: React.FC = () => {
             <Label htmlFor="type">Тип тварини</Label>
             <Select onValueChange={(value) => setValue("type", value)}>
               <SelectTrigger className="w-full px-6 py-[18px] rounded-full border-gray-200 focus:ring-primary">
-                <SelectValue placeholder="Type" />
+                <SelectValue placeholder="Тип тварини" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -161,7 +161,7 @@ export const PetCreateForm: React.FC = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Gender</SelectLabel>
+                  <SelectLabel>Стать</SelectLabel>
                   <SelectItem
                     className=" rounded-lg px-3 py-2
     data-[highlighted]:bg-gray-200
@@ -169,7 +169,7 @@ export const PetCreateForm: React.FC = () => {
     cursor-pointer"
                     value="male"
                   >
-                    Male
+                    Хлопчик
                   </SelectItem>
                   <SelectItem
                     className="rounded-lg px-3 py-2
@@ -178,7 +178,7 @@ export const PetCreateForm: React.FC = () => {
     cursor-pointer"
                     value="female"
                   >
-                    Female
+                    Дівчинка
                   </SelectItem>
                   <SelectItem
                     className="rounded-lg px-3 py-2
@@ -187,7 +187,7 @@ export const PetCreateForm: React.FC = () => {
     cursor-pointer"
                     value="unknown"
                   >
-                    Unknown
+                    інше
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -197,7 +197,7 @@ export const PetCreateForm: React.FC = () => {
             )}
           </div>
           <Button className="w-full rounded-full px-6 py-[18px] text-white">
-            Finish
+            Завершити
           </Button>
         </div>
       </form>
