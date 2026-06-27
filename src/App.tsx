@@ -5,16 +5,17 @@ import { Footer } from "./components/Footer";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "./app/store";
 import { useEffect } from "react";
-import { getMeThunk } from "./features/authSlice";
+import { getMeThunk, setAuthChecked } from "./features/authSlice";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (token) {
       dispatch(getMeThunk());
+    } else {
+      dispatch(setAuthChecked());
     }
   }, [dispatch]);
   return (

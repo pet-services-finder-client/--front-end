@@ -15,12 +15,14 @@ interface AuthState {
   user: UserRead | null;
   loading: boolean;
   error: string | null;
+  authChecked: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  authChecked: false,
 };
 
 export const loginThunk = createAsyncThunk(
@@ -134,6 +136,9 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       posthog.reset();
     },
+    setAuthChecked(state) {
+      state.authChecked = true;
+    },
   },
 
   extraReducers: (builder) => {
@@ -151,10 +156,15 @@ const authSlice = createSlice({
       })
       .addCase(getMeThunk.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.authChecked = true;
         posthog.identify(String(action.payload.id), {
           email: action.payload.email,
           full_name: action.payload.full_name,
         });
+      })
+      .addCase(getMeThunk.rejected, (state) => {
+        state.user = null;
+        state.authChecked = true;
       })
       .addCase(registerThunk.pending, (state) => {
         state.loading = true;
@@ -214,6 +224,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setAuthChecked } = authSlice.actions;
 
 export default authSlice.reducer;

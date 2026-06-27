@@ -11,6 +11,7 @@ import { BusinessDetailsPage } from "./pages/BusinessDetailsPage/BusinessDetails
 import { Catalog } from "./pages/Catalog/Catalog.tsx";
 import { ResetPasswordPage } from "./pages/ResetPasswordPage/ResetPasswordPage.tsx";
 import posthog from "posthog-js";
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute.tsx";
 
 posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
   api_host: import.meta.env.VITE_POSTHOG_HOST ?? "https://eu.i.posthog.com",
@@ -24,8 +25,10 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
           <Route path=":category" element={<Catalog />} />
-          <Route path="petCreate" element={<PetCreatePage />} />
-          <Route path="profile" element={<UserPetProfilePage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="petCreate" element={<PetCreatePage />} />
+            <Route path="profile" element={<UserPetProfilePage />} />
+          </Route>
           <Route path="businesses/:id" element={<BusinessDetailsPage />} />
           <Route path="reset-password" element={<ResetPasswordPage />} />
         </Route>
