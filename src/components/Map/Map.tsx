@@ -42,6 +42,15 @@ export const Map: React.FC<Props> = ({ businesses, isLoading }) => {
               defaultCenter={{ lat: 50.4501, lng: 30.5234 }}
               defaultZoom={12}
               gestureHandling="greedy"
+              restriction={{
+                latLngBounds: {
+                  north: 51.0,
+                  south: 49.8,
+                  west: 29.3,
+                  east: 31.8,
+                },
+                strictBounds: true,
+              }}
             >
               {businesses.map((b) => (
                 <Marker
