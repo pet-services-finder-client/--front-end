@@ -15,6 +15,7 @@ import { Menu } from "./Menu";
 import type { AutocompleteItem } from "@/types";
 import { autocompleteBusinesses } from "@/api/business";
 import { DropDown } from "../DropDown/DropDown";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 export type ModalType = "login" | "register" | "forgot" | null;
 
@@ -34,6 +35,7 @@ export const Header: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useBodyScrollLock(!!modal || mobileMenuOpen);
 
   const handleLogOut = () => {
     dispatch(logout());
@@ -78,9 +80,9 @@ export const Header: React.FC = () => {
     <>
       <header className="flex items-center justify-between w-full py-4 md:h-[91px] px-4 md:px-[108px] md:pt-[20px]">
         {/* Logo */}
-        <Link to="/" className="flex flex-col items-center gap-2">
+        <Link to="/" className="flex flex-col items-center gap-4">
           <span className="logo text-primary">Pawly</span>
-          <img src="./Logo.svg" alt="Logo" className="w-10 md:w-auto" />
+          <img src="./Logo.svg" alt="Logo" className="w-10 h-10" />
         </Link>
 
         {/* Desktop Navigation */}

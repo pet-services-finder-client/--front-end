@@ -30,9 +30,15 @@ export const BusinessInfoCard: React.FC<Props> = ({ business }) => {
         <MapPin size={16} className="text-gray-400 mt-0.5 shrink-0" />
         <div>
           <p className="text-xs text-gray-400">Адреса</p>
-          <p className="text-sm">
+
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${business.latitude},${business.longitude}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm hover:text-blue-500 hover:underline transition-colors"
+          >
             {business.city}, {business.address}
-          </p>
+          </a>
         </div>
       </div>
       {hoursLabel && (
@@ -50,7 +56,12 @@ export const BusinessInfoCard: React.FC<Props> = ({ business }) => {
           <Phone size={16} className="text-gray-400 mt-0.5 shrink-0" />
           <div>
             <p className="text-xs text-gray-400">Контакти</p>
-            <p className="text-sm">{business.phone}</p>
+            <a
+              href={`tel:${business.phone}`}
+              className="text-sm hover:text-blue-500 hover:underline transition-colors"
+            >
+              {business.phone}
+            </a>
           </div>
         </div>
       )}

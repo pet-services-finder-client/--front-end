@@ -42,7 +42,10 @@ export const Filters: React.FC<Props> = ({ filters, onChange }) => {
           type="text"
           placeholder="Назва закладу..."
           value={filters.q ?? ""}
-          onChange={(e) => update({ q: e.target.value || undefined })}
+          onChange={(e) => {
+            const trimmed = e.target.value.trim();
+            update({ q: trimmed || undefined });
+          }}
           className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
       </div>

@@ -77,9 +77,6 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
             className="flex flex-col gap-4 mt-4"
           >
             <div className="flex flex-col gap-1">
-              <label htmlFor="forgot-email" className="text-sm text-gray-600">
-                Електронна пошта
-              </label>
               <Input
                 id="forgot-email"
                 type="email"

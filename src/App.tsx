@@ -21,7 +21,7 @@ function App() {
   return (
     <div className=" theme flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 w-full  px-4 md:px-[108px]">
+      <main className="flex-1 w-full px-4 md:px-6 lg:px-[108px]">
         <Outlet />
       </main>
       <Footer />

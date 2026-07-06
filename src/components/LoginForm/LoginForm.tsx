@@ -96,9 +96,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <span className="mb-8">Введіть електронну пошту та пароль</span>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="text-sm text-gray-600">
-            Електронна пошта
-          </label>
           <Input
             id="email"
             type="email"
@@ -112,16 +109,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="password" className="text-sm text-gray-600">
-            Пароль
-          </label>
           <div className="relative">
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Пароль "
               {...register("password")}
-              className=" rounded-full !bg-gray-100 border-gray-200 px-6 py-4 placeholder:secondary-text focus-visible:ring-primary"
+              className=" rounded-full px-6 py-5 !bg-gray-100 border-gray-200 placeholder:secondary-text focus-visible:ring-primary"
             />
             <button
               type="button"

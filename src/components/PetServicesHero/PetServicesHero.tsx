@@ -63,7 +63,7 @@ export const PetServicesHero: React.FC<Props> = ({ onExploreClick }) => {
 
       <div className="order-1 md:order-2 md:col-start-9 md:col-end-13 flex justify-end items-end w-full">
         <img
-          src="./image/dog.svg"
+          src="./image/dog.webp"
           alt="Dog"
           className="h-[220px] md:h-auto w-auto md:w-full object-contain object-bottom md:max-h-[496px]"
         />

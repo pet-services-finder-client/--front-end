@@ -103,9 +103,6 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <label htmlFor="full_name" className="text-main">
-            Ім’я
-          </label>
           <Input
             id="full_name"
             type="text"
@@ -119,9 +116,6 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="text-main">
-            Електронна пошта
-          </label>
           <Input
             id="email"
             type="email"
@@ -135,9 +129,6 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="password" className="text-main">
-            Пароль
-          </label>
           <div className="relative">
             <Input
               id="password"
@@ -160,9 +151,6 @@ export const RegisterForm: React.FC<Props> = ({ onClose, onSwitchModal }) => {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="confirmPassword" className="text-main">
-            Повторіть пароль{" "}
-          </label>
           <div className="relative">
             <Input
               id="confirmPassword"

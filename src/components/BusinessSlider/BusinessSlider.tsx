@@ -42,12 +42,13 @@ export const BusinessSlider: React.FC<Props> = ({ businesses, isLoading }) => {
         ))}
       </div>
 
-      <div className="md:hidden flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory">
+      <div className="md:hidden flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory -mx-4 px-4 scroll-px-4">
         {businesses.map((b) => (
-          <div key={b.id} className="snap-start shrink-0 w-[260px]">
+          <div key={b.id} className="snap-start shrink-0 w-[75vw]">
             <BusinessCard business={b} />
           </div>
         ))}
+        <div className="shrink-0 w-4" />
       </div>
     </>
   );
