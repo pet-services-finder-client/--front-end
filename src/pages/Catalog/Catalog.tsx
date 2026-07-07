@@ -3,8 +3,8 @@ import { BusinessSlider } from "@/components/BusinessSlider/BusinessSlider";
 import { Filters } from "@/components/Filters/Filters";
 import { Map } from "@/components/Map/Map";
 import type { BusinessFilters, BusinessListItem } from "@/types";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const CATEGORY_SLUGS: Record<string, string> = {
   clinics: "vet_clinic",
@@ -26,20 +26,43 @@ const CATEGORY_IDS: Record<string, number> = {
 
 export const Catalog = () => {
   const { category } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [businesses, setBusinesses] = useState<BusinessListItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const title = category ? PRESET_TITLES[category] : "Catalog";
   const slug = category ? CATEGORY_SLUGS[category] : null;
 
-  const [filters, setFilters] = useState<BusinessFilters>({
-    category_id: slug ? CATEGORY_IDS[slug] : undefined,
-  });
+  const filters: BusinessFilters = useMemo(() => {
+    const result: BusinessFilters = {
+      category_id: slug ? CATEGORY_IDS[slug] : undefined,
+    };
 
-  useEffect(() => {
-    if (!slug) return;
-    setFilters({ category_id: CATEGORY_IDS[slug] });
-  }, [slug]);
+    const q = searchParams.get("q");
+    if (q) result.q = q;
+
+    if (searchParams.get("open_now") === "true") result.open_now = true;
+    if (searchParams.get("accepts_emergencies") === "true")
+      result.accepts_emergencies = true;
+    if (searchParams.get("emergency_24_7") === "true")
+      result.emergency_24_7 = true;
+
+    return result;
+  }, [slug, searchParams]);
+
+  const handleFiltersChange = useCallback(
+    (next: BusinessFilters) => {
+      const params = new URLSearchParams();
+      Object.entries(next).forEach(([key, value]) => {
+        if (key === "category_id") return;
+        if (value !== undefined && value !== "" && value !== null) {
+          params.set(key, String(value));
+        }
+      });
+      setSearchParams(params);
+    },
+    [setSearchParams],
+  );
 
   useEffect(() => {
     if (!filters.category_id) return;
@@ -54,12 +77,11 @@ export const Catalog = () => {
   if (!category || !CATEGORY_SLUGS[category]) {
     return <h1>Not Found</h1>;
   }
-
   return (
     <div className="py-6">
       <h1 className="text-2xl font-bold mb-4">{title}</h1>
 
-      <Filters filters={filters} onChange={setFilters} />
+      <Filters filters={filters} onChange={handleFiltersChange} />
       <div className="col-span-4 md:col-span-12 mt-8">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-5 md:h-[754px]">
