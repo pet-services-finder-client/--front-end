@@ -24,7 +24,10 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path=":category" element={<Catalog />} />
+          <Route path="clinics" element={<Catalog />} />
+          <Route path="grooming" element={<Catalog />} />
+          <Route path="shop" element={<Catalog />} />
+          <Route path="catalog" element={<Catalog />} />
           <Route element={<ProtectedRoute />}>
             <Route path="petCreate" element={<PetCreatePage />} />
             <Route path="profile" element={<UserPetProfilePage />} />

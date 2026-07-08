@@ -26,8 +26,12 @@ export const DropDown: React.FC<Props> = ({
       ) : (
         results.map((item) => (
           <Link
-            to={`/businesses/${item.id}`}
-            key={item.id}
+            to={
+              item.type === "business"
+                ? `/businesses/${item.id}`
+                : `/catalog?category=${item.category_slug}&service_id=${item.id}`
+            }
+            key={`${item.type}-${item.id}`}
             className="block w-full text-left px-4 py-2.5 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
           >
             <div className="text-sm font-medium text-gray-800 truncate">

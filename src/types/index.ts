@@ -149,6 +149,7 @@ export interface BusinessFilters {
 }
 
 export interface AutocompleteItem {
+  type: "business" | "service";
   id: number;
   name: string;
   slug: string;

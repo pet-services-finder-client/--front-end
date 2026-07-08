@@ -4,7 +4,7 @@ import { Filters } from "@/components/Filters/Filters";
 import { Map } from "@/components/Map/Map";
 import type { BusinessFilters, BusinessListItem } from "@/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const CATEGORY_SLUGS: Record<string, string> = {
   clinics: "vet_clinic",
@@ -25,13 +25,16 @@ const CATEGORY_IDS: Record<string, number> = {
 };
 
 export const Catalog = () => {
-  const { category } = useParams();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [businesses, setBusinesses] = useState<BusinessListItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const title = category ? PRESET_TITLES[category] : "Catalog";
-  const slug = category ? CATEGORY_SLUGS[category] : null;
+  const category = location.pathname.split("/")[1] || null;
+  const isFixedCategory = category !== null && category !== "catalog";
+
+  const title = isFixedCategory ? PRESET_TITLES[category!] : "Каталог";
+  const slug = isFixedCategory ? CATEGORY_SLUGS[category!] : null;
 
   const filters: BusinessFilters = useMemo(() => {
     const result: BusinessFilters = {
@@ -39,7 +42,15 @@ export const Catalog = () => {
     };
 
     const q = searchParams.get("q");
+    const service_id = searchParams.get("service_id");
+    const categoryParam = searchParams.get("category");
+
     if (q) result.q = q;
+    if (service_id) result.service_id = Number(service_id);
+
+    if (!isFixedCategory && categoryParam && CATEGORY_IDS[categoryParam]) {
+      result.category_id = CATEGORY_IDS[categoryParam];
+    }
 
     if (searchParams.get("open_now") === "true") result.open_now = true;
     if (searchParams.get("accepts_emergencies") === "true")
@@ -48,7 +59,7 @@ export const Catalog = () => {
       result.emergency_24_7 = true;
 
     return result;
-  }, [slug, searchParams]);
+  }, [slug, isFixedCategory, searchParams]);
 
   const handleFiltersChange = useCallback(
     (next: BusinessFilters) => {
@@ -65,18 +76,13 @@ export const Catalog = () => {
   );
 
   useEffect(() => {
-    if (!filters.category_id) return;
     setIsLoading(true);
-
     getBusinesses(filters)
       .then((res) => setBusinesses(res.items))
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }, [filters]);
 
-  if (!category || !CATEGORY_SLUGS[category]) {
-    return <h1>Not Found</h1>;
-  }
   return (
     <div className="py-6">
       <h1 className="text-2xl font-bold mb-4">{title}</h1>
